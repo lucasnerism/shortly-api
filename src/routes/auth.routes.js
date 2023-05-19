@@ -5,7 +5,7 @@ import usersController from "../controllers/users.controller.js";
 
 const authRouter = Router();
 
-authRouter.post('/sign-up', validateSchema(signUpSchema), usersController.signUp);
-authRouter.post('/sign-in', validateSchema(signInSchema), usersController.signIn);
+authRouter.post('/signup', validateSchema(signUpSchema), usersController.signUp);
+authRouter.post('/signin', validateSchema(signInSchema), usersController.signIn);
 
 export default authRouter;
