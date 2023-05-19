@@ -5,7 +5,7 @@ const validateSchema = (schema) => {
     const { error } = schema.validate(sanitizeObjects(req.body), { abortEarly: false });
     if (error) {
       const errors = error.details.map(err => err.message);
-      res.status(422).json(errors);
+      return res.status(422).json(errors);
     }
     next();
   };
