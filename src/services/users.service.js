@@ -1,10 +1,10 @@
-import { db } from "../database/connect.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import usersRepository from "../repositories/users.repository.js";
 
-const createNewUser = async ({ name, email, hashPassword }) => {
+const signUp = async (body) => {
   try {
-    await db.query(`INSERT INTO users (name, email, password) VALUES($1,$2,$3)`, [name, email, hashPassword]);
+    await usersRepository.createNewUser(body);
     return { status: 201, response: { message: "Usuário criado com sucesso" } };
   } catch (error) {
     if (error.code === '23505') return { status: 409, response: { message: "E-mail já cadastrado" } };
@@ -12,9 +12,10 @@ const createNewUser = async ({ name, email, hashPassword }) => {
   }
 };
 
-const login = async ({ email, password }) => {
+const signIn = async ({ email, password }) => {
   try {
-    const user = (await db.query(`SELECT * from users WHERE email=$1`, [email])).rows[0];
+    const result = await usersRepository.getUserByEmail(email);
+    const user = result.rows[0];
     if (!user) return { status: 401, response: { message: "E-mail não encontrado" } };
 
     const passwordValidation = bcrypt.compareSync(password, user.password);
@@ -22,26 +23,26 @@ const login = async ({ email, password }) => {
 
     const data = { userId: user.id };
     const token = jwt.sign(data, process.env.JWT_KEY, { expiresIn: "1 day" });
-    return { status: 200, response: token };
+    return { status: 200, response: { token, name: user.name } };
   } catch (error) {
     return { status: 500, response: { message: error.message } };
   }
 };
 
-const findUserById = async (id) => {
+const findUser = async (id) => {
   try {
-    const user = (await db.query(`SELECT * FROM users WHERE id=$1`, [id])).rows[0];
+    const result = await usersRepository.getUserById(id);
+    const user = result.rows[0];
+    if (!user) return { status: 404, response: { message: "Usuário não encontrado" } };
 
-    if (!user) return { status: 404, user: { message: "Usuário não encontrado" } };
-
-    return { status: 200, user };
+    return { status: 200, response: { user } };
   } catch (error) {
-    return { status: 500, message: error.message };
+    return { status: 500, response: { message: error.message } };
   }
 };
 
 export default {
-  createNewUser,
-  login,
-  findUserById
+  signUp,
+  signIn,
+  findUser
 };
