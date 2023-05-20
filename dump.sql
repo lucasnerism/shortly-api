@@ -105,26 +105,31 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: urls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.urls VALUES (1, 'http://www.drive.com.br', 'onr495p1', 1, 0, '2023-05-20 03:17:30.486588');
+INSERT INTO public.urls VALUES (16, 'http://driven.com.br', 'hpk05y4R', 1, 0, '2023-05-20 03:53:09.882235');
+INSERT INTO public.urls VALUES (17, 'http://driven.com.br', 'PV337UcO', 1, 0, '2023-05-20 03:53:16.348858');
 
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.users VALUES (1, 'Kayds', 'lucas@lucas.com', '$2b$10$PDKDYM/BPWAz0sc20WfoAeLEJukMjoWGOuL/RQ6rFURE2ExKZsmXq', '2023-05-19 18:01:59.099201');
+INSERT INTO public.users VALUES (3, 'Kayds', 'kayds@lucas.com', '$2b$10$2YfnyZrwP2ltJ9.cKXQjiupd3BQNdS9.vmVYIKlK9xaXE6E5CzWty', '2023-05-19 18:10:17.723104');
 
 
 --
 -- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.urls_id_seq', 1, false);
+SELECT pg_catalog.setval('public.urls_id_seq', 17, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, false);
+SELECT pg_catalog.setval('public.users_id_seq', 3, true);
 
 
 --
@@ -133,6 +138,14 @@ SELECT pg_catalog.setval('public.users_id_seq', 1, false);
 
 ALTER TABLE ONLY public.urls
     ADD CONSTRAINT urls_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: urls urls_shortUrl_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.urls
+    ADD CONSTRAINT "urls_shortUrl_key" UNIQUE ("shortUrl");
 
 
 --
