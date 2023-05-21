@@ -33,9 +33,17 @@ const findUser = async (id) => {
   try {
     const result = await usersRepository.getUserById(id);
     const user = result.rows[0];
-    if (!user) return { status: 404, response: { message: "Usuário não encontrado" } };
-
     return { status: 200, response: { user } };
+  } catch (error) {
+    return { status: 500, response: { message: error.message } };
+  }
+};
+
+const getUser = async (id) => {
+  try {
+    const result = await usersRepository.getUser(id);
+    const user = result.rows[0];
+    return { status: 200, response: user };
   } catch (error) {
     return { status: 500, response: { message: error.message } };
   }
@@ -44,5 +52,6 @@ const findUser = async (id) => {
 export default {
   signUp,
   signIn,
-  findUser
+  findUser,
+  getUser
 };

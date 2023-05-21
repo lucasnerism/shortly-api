@@ -13,7 +13,14 @@ const signIn = async (req, res) => {
   res.status(status).json(response);
 };
 
+const getUser = async (req, res) => {
+  const { id } = res.locals.user;
+  const { status, response } = await usersService.getUser(id);
+  res.status(status).json(response);
+};
+
 export default {
   signUp,
-  signIn
+  signIn,
+  getUser
 };

@@ -8,7 +8,7 @@ import urlsController from "../controllers/urls.controller.js";
 const urlsRouter = Router();
 
 urlsRouter.get('/urls/:id', urlsController.getUrlById);
-urlsRouter.get('/urls/open/:shortUrl');
+urlsRouter.get('/urls/open/:shortUrl', urlsController.openUrl);
 urlsRouter.post('/urls/shorten', authMiddleware, validateSchema(urlSchema), urlsController.createLink);
 urlsRouter.delete('/urls/:id', authMiddleware, urlsController.deleteUrlById);
 

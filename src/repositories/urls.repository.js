@@ -16,9 +16,14 @@ const deleteUrlById = (id) => {
   return db.query(`DELETE FROM urls WHERE id=$1`, [id]);
 };
 
+const updateUrlByShortUrl = (shortUrl) => {
+  return db.query(`UPDATE urls SET "visitCount"="visitCount" + 1 WHERE "shortUrl"=$1`, [shortUrl]);
+};
+
 export default {
   getUrlByShortUrl,
   insertNewUrl,
   getUrlById,
-  deleteUrlById
+  deleteUrlById,
+  updateUrlByShortUrl
 };
