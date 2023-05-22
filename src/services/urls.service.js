@@ -34,7 +34,6 @@ const deleteUrlById = async (id, userId) => {
   try {
     const result = await urlsRepository.getUrlById(id);
     if (result.rowCount === 0) return { status: 404, response: { message: "Url não encontrada" } };
-    console.log(result.rows[0]);
 
     if (result.rows[0].userId !== userId) return { status: 401, response: { message: "Você não tem permissão para realizar essa operação" } };
 
