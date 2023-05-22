@@ -15,7 +15,8 @@ const getUrlById = async (req, res) => {
 
 const deleteUrlById = async (req, res) => {
   const { id } = req.params;
-  const { status, response } = await urlsService.deleteUrlById(id);
+  const { id: userId } = res.locals.user;
+  const { status, response } = await urlsService.deleteUrlById(id, userId);
   res.status(status).json(response);
 };
 
