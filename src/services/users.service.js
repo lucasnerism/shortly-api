@@ -23,7 +23,7 @@ const signIn = async ({ email, password }) => {
 
     const data = { userId: user.id };
     const token = jwt.sign(data, process.env.JWT_KEY, { expiresIn: "1 day" });
-    return { status: 200, response: { token } };
+    return { status: 200, response: { token, name: user.name } };
   } catch (error) {
     return { status: 500, response: { message: error.message } };
   }
