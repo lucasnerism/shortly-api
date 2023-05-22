@@ -9,7 +9,7 @@ const getUrlByShortUrl = (shortUrl) => {
 };
 
 const getUrlById = (id) => {
-  return db.query(`SELECT id,"shortUrl",url FROM urls WHERE id=$1`, [id]);
+  return db.query(`SELECT id,"shortUrl",url,"userId" FROM urls WHERE id=$1`, [id]);
 };
 
 const deleteUrlById = (id) => {
