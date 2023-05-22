@@ -19,8 +19,14 @@ const getUser = async (req, res) => {
   res.status(status).json(response);
 };
 
+const getRankings = async (req, res) => {
+  const { status, response } = await usersService.getRankings();
+  res.status(status).json(response);
+};
+
 export default {
   signUp,
   signIn,
-  getUser
+  getUser,
+  getRankings
 };

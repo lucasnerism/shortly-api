@@ -5,6 +5,6 @@ import usersController from "../controllers/users.controller.js";
 const usersRouter = Router();
 
 usersRouter.get('/users/me', authMiddleware, usersController.getUser);
-usersRouter.get('/ranking');
+usersRouter.get('/ranking', usersController.getRankings);
 
 export default usersRouter;

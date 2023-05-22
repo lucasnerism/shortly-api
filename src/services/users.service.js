@@ -42,8 +42,18 @@ const findUser = async (id) => {
 const getUser = async (id) => {
   try {
     const result = await usersRepository.getUser(id);
-    const user = result.rows[0];
+    const user = result.rows[0].user;
     return { status: 200, response: user };
+  } catch (error) {
+    return { status: 500, response: { message: error.message } };
+  }
+};
+
+const getRankings = async () => {
+  try {
+    const result = await usersRepository.getRankings();
+    const ranking = result.rows;
+    return { status: 200, response: ranking };
   } catch (error) {
     return { status: 500, response: { message: error.message } };
   }
@@ -53,5 +63,6 @@ export default {
   signUp,
   signIn,
   findUser,
-  getUser
+  getUser,
+  getRankings
 };

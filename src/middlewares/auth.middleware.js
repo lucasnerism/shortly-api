@@ -20,7 +20,6 @@ const authMiddleware = (req, res, next) => {
     if (status === 404) return res.status(status).json(response);
 
     res.locals.user = response.user;
-    console.log(res.locals.user);
     return next();
   });
 };
