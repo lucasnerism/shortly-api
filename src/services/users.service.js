@@ -22,7 +22,8 @@ const signIn = async ({ email, password }) => {
     if (!passwordValidation) return { status: 401, response: { message: "Senha incorreta" } };
 
     const data = { userId: user.id };
-    const token = jwt.sign(data, process.env.JWT_KEY, { expiresIn: "1 day" });
+    const jwtKey = process.env.JWT_KEY || "uRealy_should_make_a_JWT_KEYinYourDotEnv";
+    const token = jwt.sign(data, jwtKey, { expiresIn: "1 day" });
     return { status: 200, response: { token, name: user.name } };
   } catch (error) {
     return { status: 500, response: { message: error.message } };

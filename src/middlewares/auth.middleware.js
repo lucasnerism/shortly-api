@@ -13,7 +13,8 @@ const authMiddleware = (req, res, next) => {
 
   if (schema !== "Bearer" || !token) return res.status(401).json({ message: "Formato de token inválido" });
 
-  jwt.verify(token, process.env.JWT_KEY, async (error, decode) => {
+  const jwtKey = process.env.JWT_KEY || "uRealy_should_make_a_JWT_KEYinYourDotEnv";
+  jwt.verify(token, jwtKey, async (error, decode) => {
     if (error) return res.status(401).json({ message: "Token inválido" });
 
     const { status, response } = await usersService.findUser(decode.userId);
