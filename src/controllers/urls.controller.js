@@ -2,7 +2,6 @@ import urlsService from "../services/urls.service.js";
 
 const createLink = async (req, res) => {
   const { id: userId } = res.locals.user;
-  console.log(userId);
   const body = { ...req.body, userId };
   const { status, response } = await urlsService.createLink(body);
   res.status(status).json(response);

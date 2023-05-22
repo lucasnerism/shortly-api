@@ -22,7 +22,7 @@ const getUser = (id) => {
     FROM (
       SELECT id,"shortUrl",url,"visitCount"
       FROM urls
-      WHERE "userId"=$1 
+      WHERE "userId"=$1
     ) e)
     ) AS USER
   FROM users
@@ -30,37 +30,14 @@ const getUser = (id) => {
   ;`, [id]);
 };
 
-// users.id, users.name,SUM(urls."visitCount") AS "visitCount", 
-// SELECT JSON_AGG(e) AS links
-// FROM (
-//   SELECT id,"shortUrl",url,"visitCount"
-//   FROM urls
-//   WHERE "userId"=$1 
-// ) e
-// WITH
-// url as (
-//   SELECT id,"shortUrl",url,"visitCount"
-//   FROM urls
-//   WHERE "userId"=$1
-// ),
-// users as (
-//   SELECT users.id,users.name, SUM(urls."visitCount") AS "visitCount",
-//     JSON_AGG(url) AS "shortenedUrls"
-//   FROM users
-//   JOIN urls
-//   ON user.id = urls."userId"
-//   GROUP BY users.id
-// )
-// SELECT JSON_AGG(users) AS user
-// FROM users
-// WHERE users.id=$1 
-
 const getRankings = () => {
   return db.query(`
   SELECT users.id,users.name,COUNT(urls.id) AS "linksCount", SUM(urls."visitCount") AS "visitCount"
   FROM users
   JOIN urls ON users.id = urls."userId"
   GROUP BY users.id
+  ORDER BY "visitCount" DESC
+  LIMIT 10
   `);
 };
 
